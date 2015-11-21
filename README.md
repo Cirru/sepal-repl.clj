@@ -19,23 +19,30 @@ https://github.com/trhura/clojure-term-colors/issues/2
 ```text
 ➤➤ rlwrap lein run
 Starting REPL for Sepal.clj ...
-sepal> println "|hello world!"
-hello world!
-    <- nil
+sepal> defn f1 (x y) (+ x y $ * x y)
+    -> (defn f1 [x y] (+ x y (* x y)))
+    <- #'user/f1
 sepal> + 1 2 3
+    -> (+ 1 2 3)
     <- 6
-sepal> [] 1 2 3
-    <- [1 2 3]
-sepal> [] 1 2 |string
-    <- [1 2 "string"]
-sepal> {} (:a "|thing of a") (:b |of-b)
-    <- {:b "of-b", :a "thing of a"}
-sepal> defn add (a b) $ + a b
-    <- #<Var@478ee483: #object[user$add 0x1bb564e2 "user$add@1bb564e2"]>
-sepal> add 1 $ + 2 3
-    <- 6
-sepal>
+sepal> str |hello "| " |world!
+    -> (str "hello" " " "world!")
+    <- "hello world!"
+sepal> [] 1 2 3 4 $ [] 5 6
+    -> [1 2 3 4 [5 6]]
+    <- [1 2 3 4 [5 6]]
+sepal> {} (:a 1) (:b 2)
+    -> {:b 2, :a 1}
+    <- {:b 2, :a 1}
+sepal> case 1 (1 |one) (2 |two) |else
+    -> (case 1 1 "one" 2 "two" "else")
+    <- "one"
+sepal> case 3 (1 |one) (2 |two) |else
+    -> (case 3 1 "one" 2 "two" "else")
+    <- "else"
 ```
+
+![text with colors](https://pbs.twimg.com/media/CUUkNuSUsAA4-kd.png)
 
 ### Bug
 
