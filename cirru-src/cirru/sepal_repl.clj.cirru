@@ -5,19 +5,23 @@ ns cirru.sepal-repl
     [] cirru.sepal :refer $ [] transform-x
     [] cirru.parser-combinator :refer $ [] pare
     [] clojure.term.colors :refer :all
-    [] aprint.core :refer $ [] aprint
     [] clojure.pprint :as pp
+    [] fipp.edn :refer
+      [] pprint
+      , :rename $ {} (pprint fipp)
 
 defn- eval-lines (lines)
   if (> (count lines) 0)
     let
         quoted-code $ transform-x (first lines)
+        _ $ println $ magenta
+          str "|    -> "
+            with-out-str $ pp/write quoted-code
         result $ try (eval quoted-code)
           catch Exception e
             println e
       print $ blue "|    <- "
-      pp/write result
-      println
+      fipp result
       recur (rest lines)
 
 defn- eval-print ()
